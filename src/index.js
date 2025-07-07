@@ -1,9 +1,11 @@
-// require('dotenv').config({ path: require('path').resolve(__dirname, '../config.env') });
+require('dotenv').config({ path: require('path').resolve(__dirname, '../config.env') });
 const express = require('express');
 const connectDB = require('./config/db');
 const app = express();
 const PORT = process.env.PORT || 5000;
-const User = require('./models/user.model');
+const auth = require('./routes/auth.routes');
+const UserRepo = require('./repositories/user.repository');
+const tokenManager = require('./utils/tokenManager');
 
 
 app.use(express.json());
@@ -18,10 +20,16 @@ app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
  connectDB();
 
 
- User.find()
- .then(users => {
-   console.log(`Users: ${users}`);
- })
- .catch(err => {
-   console.error(`Error fetching users: ${err.message}`);
- }); 
+app.use('/api/auth', auth);
+
+
+const user = UserRepo.GetUserByUserName('user1').then((user) => {
+    console.log(user);
+    tokenManager.generateToken(user[0]).then((token) => {
+        console.log('Generated Token:', token);
+    }).catch((err) => { 
+        console.error('Error generating token:', err);
+    })
+}).catch((err) => {
+    console.error('Error fetching user:', err);
+})
