@@ -1,3 +1,5 @@
-exports.getUsers = (req, res) => {
-  res.send("Get all users");
-};
+
+
+module.exports.addNewContact = (req, res) => {
+  res.send('Add new contact');
+}
