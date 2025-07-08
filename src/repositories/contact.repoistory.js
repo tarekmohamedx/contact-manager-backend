@@ -24,3 +24,8 @@ const DeleteById = async (id) => {
 const GetById = async (id) => {
     return await Contact.findById(id);
 }
+
+
+module.exports = { 
+    Create
+    , InsertMany, }
