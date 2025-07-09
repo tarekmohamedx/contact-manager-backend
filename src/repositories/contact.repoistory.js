@@ -26,6 +26,11 @@ const GetById = async (id) => {
 }
 
 
-module.exports = { 
-    Create
-    , InsertMany, }
+module.exports = {
+  Create,
+  InsertMany,
+  GetAll,
+  DeleteById,
+  GetById,
+  Save,
+};
