@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const auth = require("./routes/auth.routes");
 const tokenManager = require("./utils/tokenManager");
 const contact = require("./routes/contact.routes");
+const user = require("./routes/user.routes");
 
 app.use(express.json());
 
@@ -22,6 +23,7 @@ connectDB();
 
 app.use("/api/auth", auth);
 app.use("/api/contact", contact);
+app.use("/api/user", user);
 
 
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

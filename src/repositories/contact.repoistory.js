@@ -25,6 +25,15 @@ const GetById = async (id) => {
     return await Contact.findById(id);
 }
 
+const GetByUserId = async (userId, skip = 0, limit = 10) => {
+    return await Contact.find({ user: userId })
+      .skip(skip)
+      .limit(limit);
+  };
+
+  const CountDocuments = async (userId) => {
+    return await Contact.countDocuments(userId);
+  };
 
 module.exports = {
   Create,
@@ -33,4 +42,6 @@ module.exports = {
   DeleteById,
   GetById,
   Save,
+  GetByUserId,
+  CountDocuments
 };

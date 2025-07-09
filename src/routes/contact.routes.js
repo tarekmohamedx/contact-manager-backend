@@ -12,6 +12,8 @@ const contactValidation = [
     body("user")
         .notEmpty()
         .withMessage("User ID is required")
+        .isMongoId()
+        .withMessage("Invalid User ID format"),
 ];
 
 router.get("/", ContactControler.getAllContacts);
