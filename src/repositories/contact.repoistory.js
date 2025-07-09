@@ -18,7 +18,7 @@ const GetAll = async () => {
 }
 
 const DeleteById = async (id) => {
-    return await Contact.findByIdAndDelete(id);
+    const contact = await Contact.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
 }
 
 const GetById = async (id) => {
@@ -26,7 +26,7 @@ const GetById = async (id) => {
 }
 
 const GetByUserId = async (userId, skip = 0, limit = 10) => {
-    return await Contact.find({ user: userId })
+    return await Contact.find({ user: userId, isDeleted: false })
       .skip(skip)
       .limit(limit);
   };
