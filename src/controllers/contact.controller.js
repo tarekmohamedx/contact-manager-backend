@@ -1,12 +1,10 @@
 const { validationResult } = require("express-validator");
 const ContactRepository = require("../repositories/contact.repoistory");
 
-getAllContacts = async (req, res) => {
-  console.log("Get all contacts called");
-  res.send("All Contacts");
-};
-
 addNewContact = async (req, res) => {
+  console.log("Add new contact called", req.body);
+  const userId = req.user.id;
+  req.body.user = userId;
   console.log("Add new contact called", req.body);
 
   const errors = validationResult(req);
@@ -54,7 +52,6 @@ const getUserContacts = async (req, res) => {
 };
 
 module.exports = {
-  getAllContacts,
   addNewContact,
   getUserContacts
 };

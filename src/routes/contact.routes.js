@@ -9,14 +9,13 @@ const contactValidation = [
     body("Phone").notEmpty().withMessage("Phone is required"),
     body("Address").notEmpty().withMessage("Address is required"),
     body("notes").optional().isString().withMessage("Notes must be a string"),
-    body("user")
-        .notEmpty()
-        .withMessage("User ID is required")
-        .isMongoId()
-        .withMessage("Invalid User ID format"),
+    // body("user")
+    //     .notEmpty()
+    //     .withMessage("User ID is required")
+    //     .isMongoId()
+    //     .withMessage("Invalid User ID format"),
 ];
 
-router.get("/", ContactControler.getAllContacts);
 router.post("/", authMiddleware, contactValidation, ContactControler.addNewContact);
 
 module.exports = router;
