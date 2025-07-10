@@ -14,15 +14,15 @@ const Save = async () => {
 }
 
 const GetAll = async () => {
-    return await Contact.find({});
+    return await Contact.find({isDeleted: false});
 }
 
 const DeleteById = async (id) => {
-    const contact = await Contact.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+    return await Contact.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
 }
 
 const GetById = async (id) => {
-    return await Contact.findById(id);
+    return await Contact.findById(id ).where({ isDeleted: false });
 }
 
 const GetByUserId = async (userId, skip = 0, limit = 10) => {
@@ -31,8 +31,14 @@ const GetByUserId = async (userId, skip = 0, limit = 10) => {
       .limit(limit);
   };
 
-  const CountDocuments = async (userId) => {
-    return await Contact.countDocuments(userId);
+  const CountDocuments = async () => {
+    console.log("count documents called");
+    
+    return await Contact.countDocuments({ isDeleted: false });
+  };
+
+  const CountUserDocuments = async (userId) => {
+    return await Contact.countDocuments(userId, { isDeleted: false });
   };
 
 module.exports = {
@@ -43,5 +49,6 @@ module.exports = {
   GetById,
   Save,
   GetByUserId,
+  CountUserDocuments,
   CountDocuments
 };

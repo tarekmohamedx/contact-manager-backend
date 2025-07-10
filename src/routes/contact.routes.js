@@ -17,5 +17,7 @@ const contactValidation = [
 ];
 
 router.post("/", authMiddleware, contactValidation, ContactControler.addNewContact);
+router.get("/", authMiddleware, contactValidation, ContactControler.getAllContacts);
+router.delete("/:id", authMiddleware, ContactControler.deleteContactById);
 
 module.exports = router;

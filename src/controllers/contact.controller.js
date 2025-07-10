@@ -51,7 +51,50 @@ const getUserContacts = async (req, res) => {
   }
 };
 
+const getAllContacts = async (req, res) => {
+  console.log("Get All Contacts Called");
+  
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  try {
+    const contacts = await ContactRepository.GetAll(skip, limit);
+    const total = await ContactRepository.CountDocuments();
+
+    res.json({
+      contacts,
+      paginationData: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit)
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+const deleteContactById = async (req, res) => {
+  console.log("Delete Contact By Id Called");
+  
+  const contactId = req.params.id;
+  console.log("Contact Id: ", contactId);
+  try {
+    const contact = await ContactRepository.DeleteById(contactId);
+    if (!contact) {
+      return res.status(404).json({ message: "Contact not found" });
+    }
+    res.json({ message: "Contact deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
 module.exports = {
   addNewContact,
-  getUserContacts
+  getUserContacts,
+  getAllContacts,
+  deleteContactById
 };
